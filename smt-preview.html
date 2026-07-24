@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>磨飯 SMT 1280×800 手機驗收</title>
+  <style>
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;width:100%;height:100%;background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"PingFang HK","Noto Sans TC",sans-serif;overflow:hidden}
+    body{display:grid;grid-template-rows:auto minmax(0,1fr)}
+    .toolbar{display:flex;align-items:center;gap:8px;padding:max(8px,env(safe-area-inset-top)) 10px 8px;background:#000;border-bottom:1px solid #2a2a2a;min-width:0}
+    .toolbar a,.toolbar button{min-height:40px;border:1px solid #ffd43b;border-radius:10px;background:#111;color:#ffd43b;font-weight:800;padding:0 12px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+    .toolbar .title{min-width:0;flex:1}.toolbar .title strong{display:block;font-size:13px}.toolbar .title span{display:block;margin-top:2px;color:#8d8d8d;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .viewport{position:relative;min-height:0;overflow:auto;background:#000;-webkit-overflow-scrolling:touch}
+    .stage-host{position:relative;margin:18px auto 26px;width:1280px;height:800px;transform-origin:top left}
+    iframe{display:block;width:1280px;height:800px;border:3px solid #ffd43b;background:#fff}
+    body[data-mode="fit"] .viewport{overflow:hidden}
+    body[data-mode="fit"] .stage-host{position:absolute;margin:0;left:0;top:0}
+    .hint{position:fixed;left:50%;bottom:max(8px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:5;max-width:calc(100vw - 20px);padding:7px 10px;border:1px solid rgba(255,212,59,.55);border-radius:9px;background:rgba(0,0,0,.82);color:#ddd;font-size:10px;text-align:center;pointer-events:none}
+  </style>
+</head>
+<body data-mode="fit">
+  <header class="toolbar">
+    <a href="./index.html" aria-label="返回驗收首頁">返回</a>
+    <div class="title"><strong>SMT｜1280×800</strong><span>黃色框＝真實 SMT viewport；外層縮放只供手機驗收</span></div>
+    <button id="mode-btn" type="button">100% 原尺寸</button>
+  </header>
+  <main class="viewport" id="viewport">
+    <div class="stage-host" id="stage-host"><iframe id="smt-frame" src="./preview/smt/index.html" title="磨飯 SMT 1280×800"></iframe></div>
+  </main>
+  <div class="hint" id="hint">完整縮放：睇全畫面。切換 100% 後可左右／上下拖動檢查爆版。</div>
+  <script>
+    const body=document.body,viewport=document.getElementById('viewport'),host=document.getElementById('stage-host'),button=document.getElementById('mode-btn'),hint=document.getElementById('hint');
+    const W=1280,H=800;
+    function fit(){
+      const vw=viewport.clientWidth,vh=viewport.clientHeight;
+      const scale=Math.min(vw/W,vh/H);
+      host.style.transform=`scale(${scale})`;
+      host.style.left=`${Math.max(0,(vw-W*scale)/2)}px`;
+      host.style.top=`${Math.max(0,(vh-H*scale)/2)}px`;
+    }
+    function setMode(mode){
+      body.dataset.mode=mode;
+      if(mode==='fit'){
+        button.textContent='100% 原尺寸';
+        hint.textContent='完整縮放：黃色框內仍然係真實 1280×800 viewport。';
+        fit();
+      }else{
+        host.style.transform='none';host.style.left='';host.style.top='';
+        button.textContent='完整縮放';
+        hint.textContent='100% 原尺寸：拖動畫面檢查有冇超出、遮擋或操作問題。';
+        viewport.scrollTo({left:0,top:0,behavior:'instant'});
+      }
+    }
+    button.addEventListener('click',()=>setMode(body.dataset.mode==='fit'?'native':'fit'));
+    window.addEventListener('resize',()=>{if(body.dataset.mode==='fit')fit()});
+    setMode('fit');
+  </script>
+</body>
+</html>
