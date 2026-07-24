@@ -3,15 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f7f7f7">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="styles-v2.css">
-  <title>磨飯 SMM</title>
+  <meta name="theme-color" content="#000000">
+  <title>磨飯 SMM × SMT 驗收入口</title>
+  <style>
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;min-height:100%;background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"PingFang HK","Noto Sans TC",sans-serif}
+    body{min-height:100dvh;display:grid;place-items:center;padding:max(24px,env(safe-area-inset-top)) 18px max(24px,env(safe-area-inset-bottom))}
+    .shell{width:min(720px,100%)}
+    .eyebrow{margin:0 0 8px;color:#ffd43b;font-size:13px;font-weight:800;letter-spacing:.04em}
+    h1{margin:0;font-size:30px;line-height:1.15}p{margin:10px 0 0;color:#bdbdbd;line-height:1.55}
+    .grid{display:grid;gap:14px;margin-top:24px}
+    .choice{display:block;padding:20px;border:2px solid #ffd43b;border-radius:18px;background:#0d0d0d;color:#fff;text-decoration:none;min-height:126px}
+    .choice:active{transform:scale(.992);background:#171717}.choice strong{display:block;font-size:22px}.choice span{display:block;margin-top:8px;color:#cfcfcf;font-size:14px;line-height:1.45}
+    .meta{margin-top:20px;padding-top:16px;border-top:1px solid #2b2b2b;color:#858585;font-size:12px;line-height:1.55}
+  </style>
 </head>
 <body>
-  <div id="app"></div>
-  <script type="module" src="app-v2.js"></script>
-  <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw-v2.js')}</script>
+  <main class="shell">
+    <p class="eyebrow">SMM × SMT 統一視覺驗收</p>
+    <h1>選擇要檢查嘅介面</h1>
+    <p>兩套介面之後使用同一套資料及商業規則；現階段先分開驗收手機版同 1280×800 收銀機版。</p>
+    <section class="grid" aria-label="驗收介面選擇">
+      <a class="choice" href="./smm.html"><strong>SMM 手機版</strong><span>直接以手機原生寬度開啟現有 SMM 介面，測試點按、捲動、安全區同流程。</span></a>
+      <a class="choice" href="./smt-preview.html"><strong>SMT 收銀機版</strong><span>黑底黃框顯示真實 1280×800 viewport，可切換完整縮放及 100% 原尺寸拖動檢查。</span></a>
+    </section>
+    <div class="meta">此入口只作視覺／操作驗收。測試商品資料不代表正式 Admin 商品資料。</div>
+  </main>
 </body>
 </html>
